@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthConTroller;
+use App\Http\Controllers\CrawlController;
+use App\Http\Controllers\PostController;
+use Goutte\Client;
+use Symfony\Component\DomCrawler\Crawler;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,8 +27,11 @@ Route::view('/forget-password','auth.forget_password')->name('forget-password');
 Route::view('/register','auth.register')->name('register');
 Route::post('/register', [AuthConTroller::class,'register'])->name('checkRegister');
 
+// Route::get('/crawl', [CrawlController::class,'crawl']);
+
+// Route::get('/crawl-category', [CrawlController::class,'crawlCategories']);
 
 Route::prefix('admin')->group(function () {
-    Route::view('/news', 'admin.news')->name('news');
+    Route::resource('post', PostController::class);
+    Route::post('/publishing',[PostController::class,'publishing'])->name('publishing');
 });
-

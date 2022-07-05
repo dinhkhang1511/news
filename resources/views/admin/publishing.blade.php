@@ -13,11 +13,6 @@
                     {{Session::get('message')}}
                 </div>
             @endif
-            @if(Session::has('warning'))
-                <div class="alert alert-warning" role="alert">
-                    {{Session::get('warning')}}
-                </div>
-            @endif
             <table class="table card-table table-responsive table-responsive-large" style="width:100%">
                 <thead>
                 <tr>
@@ -53,29 +48,18 @@
                         @endif
                         @if(Auth::check())
                             <td class="text-right">
-                                <div class="dropdown show d-inline-block widget-dropdown">
-                                    <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order2">
-                                        <li class="dropdown-item">
-                                            <a href="{{route('post.edit',['post' => $post->id])}}" class="text-dark">Sửa</a>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <form method="POST" action="{{route('post.destroy',['post' => $post->id])}}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" onclick="return confirm('Bạn có chắc bạn muốn xóa sản phẩm này?');" class="text-dark">Xóa</button>
-                                            </form>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <form method="POST" action="{{route('publishing')}}">
-                                                @csrf
-                                                <input type="hidden" value="{{$post->id}}" name="id">
-                                                <input type="hidden" value="{{$post->status === 'publish' ? 'unpublish' : 'publish'}}" name="action">
-                                                <button type="submit" class="text-dark">{{$post->status === 'publish' ? 'Unpublish' : 'Publish'}}</button>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <form method="POST" action="{{route('publish')}}">
+                                    @csrf
+                                    <input type="hidden" value="{{$product->id}}" name="id">
+                                    <input type="hidden" value="publish" name="action">
+                                    <button type="submit" class="m-2 btn btn-success">Duyệt</button>
+                                </form>
+                                <form method="POST" action="{{route('publish')}}">
+                                    @csrf
+                                    <input type="hidden" value="{{$product->id}}" name="id">
+                                    <input type="hidden" value="reject" name="action">
+                                    <button type="submit" class="m-2 btn btn-danger">Từ chối</button>
+                                </form>
                             </td>
                         @endif
                     </tr>

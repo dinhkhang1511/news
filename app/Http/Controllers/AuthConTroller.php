@@ -27,7 +27,11 @@ class AuthConTroller extends Controller
         $password = $request->password;
         if(Auth::attempt(['email' => $email, 'password' => $password]))
         {
-
+            return redirect()->route('post.index');
+        }
+        else
+        {
+            return redirect()->route('login')->with('message','Sai thông tin đăng nhập');
         }
 
     }

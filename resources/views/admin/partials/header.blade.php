@@ -51,7 +51,7 @@
           <div id="sidebar" class="sidebar sidebar-with-footer">
             <!-- Aplication Brand -->
             <div class="app-brand">
-              <a href="#">
+              <a href="{{route('post.index')}}">
                 <svg
                   class="brand-icon"
                   xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +69,7 @@
                     <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
                   </g>
                 </svg>
-                <span class="brand-name">Shop dashboard</span>
+                <span class="brand-name">News dashboard</span>
               </a>
             </div>
             <!-- begin sidebar scrollbar -->
@@ -77,25 +77,18 @@
 
               <!-- sidebar menu -->
               <ul class="nav sidebar-inner" id="sidebar-menu">
-                  <li  class="{{ Str::contains($currentUrl, ['create', 'approval','edit']) ? '' : 'active expand'}}" >
-                    <a class=" sidenav-item-link" href="{{route('product.index')}}"
+                  <li  class="{{ Str::contains($currentUrl, ['create', 'approval','edit']) ? '' : 'active '}}" >
+                    <a class=" sidenav-item-link" href="{{route('post.index')}}"
                       aria-expanded="false" aria-controls="dashboard">
                       <i class="mdi mdi-view-dashboard-outline"></i>
-                      <span class="nav-text">Sản phẩm</span> <b class="caret"></b>
+                      <span class="nav-text">Bài viết</span> <b class="caret"></b>
                     </a>
                   </li>
-                  <li  class="{{Str::contains($currentUrl,['create','edit']) ? 'active expand' : ''}}" >
-                    <a class=" sidenav-item-link" href="{{strpos($currentUrl,'create') != 0 ? '#' : route('product.create')}}"
+                  <li  class="{{Str::contains($currentUrl,['create','edit']) ? 'active ' : ''}}" >
+                    <a class=" sidenav-item-link" href="{{!Str::contains($currentUrl,['create','edit']) ? route('post.create') : '#'}}"
                       aria-expanded="false" aria-controls="dashboard">
                       <i class="mdi mdi-view-dashboard-outline"></i>
-                      <span class="nav-text">{{strpos($currentUrl,'edit') != 0 ? 'Sửa sản phẩm' : 'Thêm Sản phẩm'}}</span> <b class="caret"></b>
-                    </a>
-                  </li>
-                  <li  class="{{strpos($currentUrl,'approval') != 0 ? 'active expand' : ''}}" >
-                    <a class=" sidenav-item-link" href="{{strpos($currentUrl,'approval') != 0 ? '#' : route('product.index').'/approval'}}"
-                      aria-expanded="false" aria-controls="dashboard">
-                      <i class="mdi mdi-view-dashboard-outline"></i>
-                      <span class="nav-text">Duyệt sản phẩm</span> <b class="caret"></b>
+                      <span class="nav-text">{{strpos($currentUrl,'edit') != 0 ? 'Sửa bài viết' : 'Thêm bài viết'}}</span> <b class="caret"></b>
                     </a>
                   </li>
               </ul>
@@ -141,7 +134,7 @@
               <!-- search form -->
               <div class="search-form d-none d-lg-inline-block">
                 <div class="input-group">
-                    <form action="{{route('search')}}" method="GET">
+                    <form action="" method="GET">
                         <div class="input-group">
                             <button type="submit" name="search" id="search-btn" class="btn btn-flat">
                             <i class="mdi mdi-magnify"></i>
