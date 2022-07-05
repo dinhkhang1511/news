@@ -6,10 +6,30 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AuthConTroller extends Controller
 {
     //
+    public function login()
+    {
+        if(Auth::check())
+        {
+            return redirect()->route('post.index');
+        }
+        else
+        {
+            return view('auth.login');
+        }
+    }
+
+    public function logout()
+    {
+        Session::flush();
+        Auth::logout();
+        return redirect()->route('login');
+    }
+
     public function checkLogin(Request $request)
     {
         $request->validate([
@@ -31,7 +51,7 @@ class AuthConTroller extends Controller
         }
         else
         {
-            return redirect()->route('login')->with('message','Sai thông tin đăng nhập');
+            return back()->with('error','Sai thông tin đăng nhập');
         }
 
     }

@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'auth.login');
-Route::view('/login', 'auth.login')->name('login');
+Route::get('/', [AuthConTroller::class,'login']);
+Route::get('/login', [AuthConTroller::class,'login'])->name('login');
 Route::post('/login', [AuthConTroller::class,'checkLogin'])->name('checkLogin');
 
 Route::view('/forget-password','auth.forget_password')->name('forget-password');
@@ -31,7 +31,12 @@ Route::post('/register', [AuthConTroller::class,'register'])->name('checkRegiste
 
 // Route::get('/crawl-category', [CrawlController::class,'crawlCategories']);
 
-Route::prefix('admin')->group(function () {
-    Route::resource('post', PostController::class);
-    Route::post('/publishing',[PostController::class,'publishing'])->name('publishing');
+Route::middleware('auth')->group(function () {
+    Route::get('logout', [AuthConTroller::class,'logout'])->name('logout');
+    Route::get('home',[PostController::class,'home'])->name('home');
+
+    Route::middleware('role')->prefix('admin')-> group( function() {
+        Route::resource('post', PostController::class);
+        Route::post('/publishing',[PostController::class,'publishing'])->name('publishing');
+    });
 });

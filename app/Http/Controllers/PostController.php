@@ -211,5 +211,13 @@ class PostController extends Controller
         }
             return back();
     }
+
+    public function home()
+    {
+        //
+        $posts = Post::where('status','publish')->orderBy('created_at','desc')->simplePaginate(10);
+        return view('home')->with('posts',$posts);
+    }
+
 }
 

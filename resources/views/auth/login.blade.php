@@ -21,10 +21,8 @@
     </head>
     <body class="antialiased">
     <div class="login-page">
-
-
         <div class="form">
-            @if ($message = Session::get('error'))
+            @if ($message = Session::get('error') )
             <div class="alert alert-danger alert-block">
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 <strong>{{ $message }}</strong>
@@ -50,8 +48,8 @@
                 @csrf
                 <input type="email" placeholder="Email" name="email"/>
                 <input type="password" style="margin-bottom:0;" placeholder="Mật khẩu"  name="password"/>
-                <a href="{{ route('forget-password') }}" class="message"  style="float:right">Forgot Password?</a>
-                <input class="submit" type="submit" name="login" value="Đăng nhập" ></input>
+                <a href="#" class="message"  style="float:right">Forgot Password?</a>
+                <input class="submit" type="submit" name="login" value="Đăng nhập" >
                 <p class="message centered"  >Not a member? <a  href="{{ route('register') }}">Sign Up</a></p>
 
             </form>

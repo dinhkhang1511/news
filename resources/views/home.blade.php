@@ -1,5 +1,6 @@
 @php
     $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $user = Auth::user();
 @endphp
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -8,7 +9,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Table - Sleek Admin Dashboard Template</title>
+  <title>News - Sleek Admin Dashboard Template</title>
 
   <!-- GOOGLE FONTS -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet"/>
@@ -77,18 +78,11 @@
 
               <!-- sidebar menu -->
               <ul class="nav sidebar-inner" id="sidebar-menu">
-                  <li  class="{{ Str::contains($currentUrl, ['create', 'approval','edit']) ? '' : 'active '}}" >
-                    <a class=" sidenav-item-link" href="{{route('post.index')}}"
+                  <li  class="active" >
+                    <a class=" sidenav-item-link" href="#"
                       aria-expanded="false" aria-controls="dashboard">
                       <i class="mdi mdi-view-dashboard-outline"></i>
                       <span class="nav-text">Bài viết</span> <b class="caret"></b>
-                    </a>
-                  </li>
-                  <li  class="{{Str::contains($currentUrl,['create','edit']) ? 'active ' : ''}}" >
-                    <a class=" sidenav-item-link" href="{{!Str::contains($currentUrl,['create','edit']) ? route('post.create') : '#'}}"
-                      aria-expanded="false" aria-controls="dashboard">
-                      <i class="mdi mdi-view-dashboard-outline"></i>
-                      <span class="nav-text">{{strpos($currentUrl,'edit') != 0 ? 'Sửa bài viết' : 'Thêm bài viết'}}</span> <b class="caret"></b>
                     </a>
                   </li>
               </ul>
@@ -204,14 +198,14 @@
                   <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                       <img src="{{asset('dist/img/user.jpg')}}" class="user-image" alt="User Image" />
-                      <span class="d-none d-lg-inline-block">Khang</span>
+                      <span class="d-none d-lg-inline-block">{{$user->name}}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                       <!-- User image -->
                       <li class="dropdown-header">
                         <img src="{{asset('dist/img/user.jpg')}}" class="img-circle" alt="User Image" />
                         <div class="d-inline-block">
-                        Khang <small class="pt-1">email@email.com</small>
+                        {{$user->name}} <small class="pt-1">{{$user->email}}</small>
                         </div>
                       </li>
 
@@ -243,3 +237,79 @@
 
 
           </header>
+
+  <div class="row">
+    <div class="col-12">
+      <!-- Recent Order Table -->
+      <div class="card card-table-border-none" id="recent-orders">
+        <div class="card-header justify-content-between">
+          <h2>Sản phẩm</h2>
+        </div>
+        <div class="card-body pt-0 pb-5">
+            @if(Session::has('message'))
+                <div class="alert alert-success" role="alert">
+                    {{Session::get('message')}}
+                </div>
+            @endif
+            @if(Session::has('warning'))
+                <div class="alert alert-warning" role="alert">
+                    {{Session::get('warning')}}
+                </div>
+            @endif
+            <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Tên bài viết</th>
+                    <th class="d-none d-md-table-cell">Mô tả</th>
+                    <th class="d-none d-md-table-cell">Ngày</th>
+                </tr>
+                </thead>
+                <tbody>
+                     @foreach($posts as $post)
+                    <tr>
+                        <td class="ml-5 d-none d-md-table-cell">
+                            <img style="height:100px; width:100px;" src="{{!str_starts_with($post->image,'news') ? $post->image : asset('dist/img/post_img'). "/" .$post->image}}"/>
+                        </td>
+                        <td >
+                        <a class="text-dark" href="{{$post->link}}"> {{ $post->title }}</a>
+                        </td>
+                        <td class="d-none d-md-table-cell">{{$post->description}}</td>
+                        <td class="d-none d-md-table-cell">{{$post->created_at }} </td>
+                    </tr>
+                     @endforeach
+            </tbody>
+          </table>
+          {{!empty($posts->links()) ? $posts->links() : ''}}
+        </div>
+      </div>
+    </div>
+  </div>
+            <footer class="footer mt-auto">
+                <div class="copyright bg-white">
+                <p>
+                    &copy; <span id="copy-year">2019</span> Copyright Sleek Dashboard Bootstrap Template by
+                    <a
+                    class="text-primary"
+                    href="http://www.iamabdus.com/"
+                    target="_blank"
+                    >Abdus</a
+                    >
+                </p>
+                </div>
+                <script>
+                    var d = new Date();
+                    var year = d.getFullYear();
+                    document.getElementById("copy-year").innerHTML = year;
+                </script>
+            </footer>
+        </div>
+    </div>
+    <script src="{{asset('dist/js/jquery.min.js')}}"></script>
+    <script src="{{asset('dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('dist/js/sleek.js')}}"></script>
+    <script src="{{asset('dist/js/custom.js')}}"></script>
+  </body>
+</html>
+
+
