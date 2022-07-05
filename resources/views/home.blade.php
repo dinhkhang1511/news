@@ -211,7 +211,7 @@
 
                       <li>
                         <a href="#">
-                          <i class="mdi mdi-account"></i> My Profile
+                          <i class="mdi mdi-account"></i> {{$user->role}}
                         </a>
                       </li>
                       <li>

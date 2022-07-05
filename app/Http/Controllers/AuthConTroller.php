@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Session;
 class AuthConTroller extends Controller
 {
     //
+
+    /**
+     * Class constructor.
+     */
+    public function __construct()
+    {
+        if(Auth::check())
+            return redirect()->route('post.index');
+    }
     public function login()
     {
         if(Auth::check())
@@ -25,7 +34,6 @@ class AuthConTroller extends Controller
 
     public function logout()
     {
-        Session::flush();
         Auth::logout();
         return redirect()->route('login');
     }

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthConTroller;
 use App\Http\Controllers\CrawlController;
 use App\Http\Controllers\PostController;
 use Goutte\Client;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,10 @@ Route::post('/register', [AuthConTroller::class,'register'])->name('checkRegiste
 // Route::get('/crawl-category', [CrawlController::class,'crawlCategories']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('logout', [AuthConTroller::class,'logout'])->name('logout');
+    Route::get('logout', function(){
+        Auth::logout();
+        return redirect()->route('login');
+    })->name('logout');
     Route::get('home',[PostController::class,'home'])->name('home');
 
     Route::middleware('role')->prefix('admin')-> group( function() {

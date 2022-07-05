@@ -1,5 +1,6 @@
 @php
     $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $user = Auth::user();
 @endphp
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -204,20 +205,20 @@
                   <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                       <img src="{{asset('dist/img/user.jpg')}}" class="user-image" alt="User Image" />
-                      <span class="d-none d-lg-inline-block">Khang</span>
+                      <span class="d-none d-lg-inline-block">{{$user->name}}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                       <!-- User image -->
                       <li class="dropdown-header">
                         <img src="{{asset('dist/img/user.jpg')}}" class="img-circle" alt="User Image" />
                         <div class="d-inline-block">
-                        Khang <small class="pt-1">email@email.com</small>
+                        {{$user->name}} <small class="pt-1">{{$user->email}}</small>
                         </div>
                       </li>
 
                       <li>
                         <a href="#">
-                          <i class="mdi mdi-account"></i> My Profile
+                          <i class="mdi mdi-account"></i> {{$user->role}}
                         </a>
                       </li>
                       <li>
