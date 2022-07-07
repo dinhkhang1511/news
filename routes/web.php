@@ -42,8 +42,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/publishing',[PostController::class,'publishing'])->name('publishing');
 
         // crawl data
-        Route::get('/crawl', [CrawlController::class,'crawl']);
-        Route::get('/crawl-category', [CrawlController::class,'crawlCategories']);
+        Route::get('/crawl', [CrawlController::class,'crawl'])->name('crawl');
+        Route::get('/crawl-category', [CrawlController::class,'crawlCategories'])->name('crawlCategories');
     });
 });
 

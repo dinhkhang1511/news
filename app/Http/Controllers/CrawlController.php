@@ -29,20 +29,27 @@ class CrawlController extends Controller
     {
         ini_set('max_execution_time', '0');
         $categories = Category::all('*');
+        if(!$categories)
+            dd('Vui lòng cào thể loại trước.');
         foreach($categories as $category)
         {
+            dump('Bắt đầu cào thể loại '.$category->name.'...');
             for($page = 1; $page <= 5; $page++)
             {
+                $countDuplicate = 0;
                 $url = "https://vnexpress.net$category->slug-p".$page;
                 $client = new Client();
                 $crawler = $client->request('GET', $url);
                 $crawler->filter('.list-news-subfolder div.thumb-art a')->each(
-                    function (Crawler $node) use($category) {
+                    function (Crawler $node) use($category,&$countDuplicate) {
+                        if($countDuplicate >= 10) // Check cào trùng bài viết 10 lần thì thoát khỏi hàm each()
+                        {
+                            return;
+                        }
                         $dt = Carbon::now();
                         $client = new Client();
                         try{
                             $crawler = $client->request('GET', $node->attr('href'));
-
                             $post = new Post();
                             $post->title        = $crawler->filter('h1.title-detail')->text();
                             $post->category_id  = $category->id;
@@ -67,9 +74,19 @@ class CrawlController extends Controller
                             dump($post->title);
                             Log::info($post->title);
                             sleep(3);
-                        }catch(Exception $ex){return;}
+                        }catch(Exception $ex){
+                            $countDuplicate++;
+                            dump('Bài viết đã tồn tại hoặc sai định dạng - ' . $countDuplicate);
+                            // sleep(1); // Có thể để sleep cho an toàn tránh bị chặn rq
                         }
+
+                    }
                 );
+                if($countDuplicate >=10 || $page === 5 )
+                {
+                    dump('Chuyển qua thể loại tiếp theo');
+                    break;
+                }
             }
         }
         ini_set('max_execution_time', '120');
@@ -98,7 +115,7 @@ class CrawlController extends Controller
                 }
             }
         );
-        // return redirect()->
+        dump('Done!!!');
     }
 
 

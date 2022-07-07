@@ -92,6 +92,20 @@
                       <span class="nav-text">{{strpos($currentUrl,'edit') != 0 ? 'Sửa bài viết' : 'Thêm bài viết'}}</span> <b class="caret"></b>
                     </a>
                   </li>
+                  <li  class="" >
+                    <a class=" sidenav-item-link" href="{{route('crawlCategories')}}"
+                      aria-expanded="false" aria-controls="dashboard">
+                      <i class="mdi mdi-view-dashboard-outline"></i>
+                      <span class="nav-text">Cào thể loại</span> <b class="caret"></b>
+                    </a>
+                  </li>
+                  <li  class="" >
+                    <a class=" sidenav-item-link" href="{{route('crawl')}}"
+                      aria-expanded="false" aria-controls="dashboard">
+                      <i class="mdi mdi-view-dashboard-outline"></i>
+                      <span class="nav-text">Cào bài viết</span> <b class="caret"></b>
+                    </a>
+                  </li>
               </ul>
             </div>
             <hr class="separator" />
