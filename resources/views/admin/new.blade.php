@@ -75,7 +75,7 @@
 
                         <div class="form-footer pt-4 pt-5 mt-4 border-top">
                             <button type="submit" class="btn btn-primary btn-default">Lưu</button>
-                            <a type="button" href="{{route('post.index')}}" class="btn btn-secondary btn-default">Hủy</a>
+                            <a id="cancel" type="button" href="#" onclick="window.history.back()" class="btn btn-secondary btn-default">Hủy</a>
                         </div>
                     </form>
                 </div>

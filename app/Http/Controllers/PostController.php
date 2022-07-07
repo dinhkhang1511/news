@@ -144,11 +144,11 @@ class PostController extends Controller
                 $request->image->move(public_path('/dist/img/post_img'),$imageName);
 
                 Post::where('id',$id)->update([
-                            'title'       =>  $request->title,
-                            'description'      =>  $request->description,
-                            'content'   =>  $request->content,
-                            'category_id' => $request->category_id,
-                            'image'      =>  $imageName
+                            'title'         =>  $request->title,
+                            'description'   =>  $request->description,
+                            'content'       =>  $request->content,
+                            'category_id'   => $request->category_id,
+                            'image'         =>  $imageName
                 ]);
                 return redirect()->route('post.index')->with('message', 'Sửa thành công');
             }
@@ -163,10 +163,10 @@ class PostController extends Controller
             try
             {
                 Post::where('id',$id)->update([
-                            'title'       =>  $request->title,
-                            'description'      =>  $request->description,
-                            'content'   =>  $request->content,
-                            'category_id' => $request->category_id,
+                            'title'         =>  $request->title,
+                            'description'   =>  $request->description,
+                            'content'       =>  $request->content,
+                            'category_id'   => $request->category_id,
                 ]);
                 return redirect()->route('post.index')->with('message', 'Sửa thành công');
             }
@@ -214,7 +214,6 @@ class PostController extends Controller
 
     public function home()
     {
-        //
         $posts = Post::where('status','publish')->orderBy('created_at','desc')->simplePaginate(10);
         return view('home')->with('posts',$posts);
     }

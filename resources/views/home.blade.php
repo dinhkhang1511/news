@@ -1,6 +1,5 @@
 @php
     $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    $user = Auth::user();
 @endphp
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -52,7 +51,7 @@
           <div id="sidebar" class="sidebar sidebar-with-footer">
             <!-- Aplication Brand -->
             <div class="app-brand">
-              <a href="{{route('post.index')}}">
+              <a href="#">
                 <svg
                   class="brand-icon"
                   xmlns="http://www.w3.org/2000/svg"
@@ -198,36 +197,18 @@
                   <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                       <img src="{{asset('dist/img/user.jpg')}}" class="user-image" alt="User Image" />
-                      <span class="d-none d-lg-inline-block">{{$user->name}}</span>
+                      <span class="d-none d-lg-inline-block">User</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                       <!-- User image -->
                       <li class="dropdown-header">
                         <img src="{{asset('dist/img/user.jpg')}}" class="img-circle" alt="User Image" />
                         <div class="d-inline-block">
-                        {{$user->name}} <small class="pt-1">{{$user->email}}</small>
+                        User <small class="pt-1"></small>
                         </div>
                       </li>
-
-                      <li>
-                        <a href="#">
-                          <i class="mdi mdi-account"></i> {{$user->role}}
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i class="mdi mdi-email"></i> Message
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#"> <i class="mdi mdi-diamond-stone"></i> Projects </a>
-                      </li>
-                      <li>
-                        <a href="#"> <i class="mdi mdi-settings"></i> Account Setting </a>
-                      </li>
-
                       <li class="dropdown-footer">
-                        <a href="{{route('logout')}}"> <i class="mdi mdi-logout"></i> Log Out </a>
+                        <a href="{{route('logout')}}"> <i class="mdi mdi-logout"></i> Login </a>
                       </li>
                     </ul>
                   </li>

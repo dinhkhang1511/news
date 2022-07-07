@@ -12,14 +12,6 @@ class AuthConTroller extends Controller
 {
     //
 
-    /**
-     * Class constructor.
-     */
-    public function __construct()
-    {
-        if(Auth::check())
-            return redirect()->route('post.index');
-    }
     public function login()
     {
         if(Auth::check())
@@ -34,7 +26,8 @@ class AuthConTroller extends Controller
 
     public function logout()
     {
-        Auth::logout();
+        if(Auth::check())
+            Auth::logout();
         return redirect()->route('login');
     }
 

@@ -16,6 +16,7 @@ class UpdateCategoryNameUnique extends Migration
         //
         Schema::table('categories', function (Blueprint $table) {
             $table->unique('name');
+            $table->string('slug')->unique();
         });
     }
 

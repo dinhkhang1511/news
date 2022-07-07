@@ -24,23 +24,28 @@ Route::get('/', [AuthConTroller::class,'login']);
 Route::get('/login', [AuthConTroller::class,'login'])->name('login');
 Route::post('/login', [AuthConTroller::class,'checkLogin'])->name('checkLogin');
 
-Route::view('/forget-password','auth.forget_password')->name('forget-password');
-Route::view('/register','auth.register')->name('register');
-Route::post('/register', [AuthConTroller::class,'register'])->name('checkRegister');
+// Route::view('/forget-password','auth.forget_password')->name('forget-password');
+// Route::view('/register','auth.register')->name('register');
+// Route::post('/register', [AuthConTroller::class,'register'])->name('checkRegister');
 
-// Route::get('/crawl', [CrawlController::class,'crawl']);
 
-// Route::get('/crawl-category', [CrawlController::class,'crawlCategories']);
+
+Route::get('home',[PostController::class,'home'])->name('home');
 
 Route::middleware('auth')->group(function () {
-    Route::get('logout', function(){
-        Auth::logout();
-        return redirect()->route('login');
-    })->name('logout');
-    Route::get('home',[PostController::class,'home'])->name('home');
+    Route::get('logout', [AuthConTroller::class,'logout'])->name('logout');
+
 
     Route::middleware('role')->prefix('admin')-> group( function() {
+        Route::any('/', [PostController::class,'index']);
         Route::resource('post', PostController::class);
         Route::post('/publishing',[PostController::class,'publishing'])->name('publishing');
+
+        // crawl data
+        Route::get('/crawl', [CrawlController::class,'crawl']);
+        Route::get('/crawl-category', [CrawlController::class,'crawlCategories']);
     });
 });
+
+
+

@@ -15,7 +15,7 @@ class CreatePosts extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique();
             $table->string('category_id');
             $table->string('image');
             $table->enum('status', ['publish', 'unpublish']);

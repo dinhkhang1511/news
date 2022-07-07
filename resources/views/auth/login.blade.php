@@ -50,8 +50,8 @@
                 <input type="password" style="margin-bottom:0;" placeholder="Mật khẩu"  name="password"/>
                 <a href="#" class="message"  style="float:right">Forgot Password?</a>
                 <input class="submit" type="submit" name="login" value="Đăng nhập" >
-                <p class="message centered"  >Not a member? <a  href="{{ route('register') }}">Sign Up</a></p>
-
+                {{-- <p class="message centered"  >Not a member? <a  href="{{ route('register') }}">Sign Up</a></p> --}}
+                <p class="message centered"  ><a  href="{{ route('home') }}">Go to home page </a></p>
             </form>
         </div>
     </div>
